@@ -5,7 +5,7 @@ reggie:
     port: 3306
     database: reggie2
     username: root
-    password: root
+    password: 1234
   redis:
     host: localhost
     port: 6379
@@ -15,7 +15,7 @@ reggie:
     endpoint: oss-cn-beijing.aliyuncs.com
     access-key-id: xxx
     access-key-secret: yyy
-    bucket-name: reggie-itcast
+    bucket-name: reggie-jayastro
   wechat:
     appid: xxx
     secret: yyy

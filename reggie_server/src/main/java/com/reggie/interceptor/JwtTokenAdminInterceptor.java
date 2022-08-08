@@ -1,5 +1,7 @@
 package com.reggie.interceptor;
 
+import com.reggie.annotation.IgnoreToken;
+import com.reggie.constant.JwtClaimsConstant;
 import com.reggie.properties.JwtProperties;
 import com.reggie.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -37,10 +39,18 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        //对加入了Ignore注解的直接放行
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        boolean hasMethodAnnotation = handlerMethod.hasMethodAnnotation(IgnoreToken.class);
+        if (hasMethodAnnotation){
+            return true;
+        }
+
         String token = request.getHeader(jwtProperties.getAdminTokenName());
 
         try {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(),token);
+            Object empId = claims.get(JwtClaimsConstant.EMP_ID);
             return true;
         } catch (Exception e) {
             log.error("jwt令牌解析失败！");

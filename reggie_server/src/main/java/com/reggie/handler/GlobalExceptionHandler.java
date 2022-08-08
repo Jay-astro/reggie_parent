@@ -1,5 +1,6 @@
-package com.reggie.exception;
+package com.reggie.handler;
 
+import com.reggie.exception.BaseException;
 import com.reggie.result.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,7 +1,11 @@
 package com.reggie.service;
 
+import com.reggie.dto.EmployeeDTO;
 import com.reggie.dto.EmployeeLoginDTO;
+import com.reggie.dto.EmployeePageQueryDTO;
 import com.reggie.entity.Employee;
+import com.reggie.result.PageResult;
+import com.reggie.result.R;
 
 public interface EmployeeService {
 
@@ -11,4 +15,17 @@ public interface EmployeeService {
      * @return
      */
     Employee login(EmployeeLoginDTO employeeLoginDTO);
+
+    /**
+     * 新增员工
+     * @param employeeDTO
+     */
+    void save(EmployeeDTO employeeDTO);
+
+    /**
+     * 员工分页查询
+     * @param pageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(EmployeePageQueryDTO pageQueryDTO);
 }

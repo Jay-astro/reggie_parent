@@ -2,6 +2,7 @@ package com.reggie.interceptor;
 
 import com.reggie.annotation.IgnoreToken;
 import com.reggie.constant.JwtClaimsConstant;
+import com.reggie.context.BaseContext;
 import com.reggie.properties.JwtProperties;
 import com.reggie.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -50,7 +51,8 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
 
         try {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(),token);
-            Object empId = claims.get(JwtClaimsConstant.EMP_ID);
+            Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
+            BaseContext.setCurrentId(empId);
             return true;
         } catch (Exception e) {
             log.error("jwt令牌解析失败！");

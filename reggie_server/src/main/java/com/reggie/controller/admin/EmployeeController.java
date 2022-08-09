@@ -114,7 +114,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/status/{status}")
-    public R<String> startOrStop(@PathVariable("status") Integer status,long id){
+    public R<String> allowOrBan(@PathVariable("status") Integer status,long id){
         log.info("员工账号状态变更");
         employeeService.allowOrBan(status,id);
         return R.success();

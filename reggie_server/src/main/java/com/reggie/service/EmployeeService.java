@@ -34,5 +34,5 @@ public interface EmployeeService {
      * @param status
      * @param id
      */
-    void startOrStop(Integer status, long id);
+    void allowOrBan(Integer status, long id);
 }

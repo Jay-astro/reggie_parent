@@ -101,7 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param id
      */
     @Override
-    public void startOrStop(Integer status, long id) {
+    public void allowOrBan(Integer status, long id) {
         employeeMapper.updateStatusById(status,id);
     }
 

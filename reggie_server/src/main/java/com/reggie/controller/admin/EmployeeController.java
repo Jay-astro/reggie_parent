@@ -114,9 +114,25 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/status/{status}")
+    @ApiOperation("员工账号状态变更")
     public R<String> allowOrBan(@PathVariable("status") Integer status,long id){
         log.info("员工账号状态变更");
         employeeService.allowOrBan(status,id);
+        return R.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据ID查询")
+    public R<Employee> selectById(@PathVariable("id") Long id){
+        Employee employee = employeeService.selectById(id);
+        return R.success(employee);
+    }
+
+
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public R<String> update(@RequestBody EmployeeDTO employeeDTO){
+        employeeService.update(employeeDTO);
         return R.success();
     }
 }

@@ -35,4 +35,14 @@ public interface EmployeeService {
      * @param id
      */
     void allowOrBan(Integer status, long id);
+
+
+    /**
+     * 根据ID查询员工
+     * @param id
+     * @return
+     */
+    Employee selectById(Long id);
+
+    void update(EmployeeDTO employeeDTO);
 }

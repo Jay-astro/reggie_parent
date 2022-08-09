@@ -95,10 +95,28 @@ public class EmployeeController {
         return  R.success();
     }
 
+    /**
+     * 分页查询
+     * @param pageQueryDTO
+     * @return
+     */
     @GetMapping("/page")
     @ApiOperation("分页查询")
     public  R<PageResult> page(EmployeePageQueryDTO pageQueryDTO){
         PageResult pageResult = employeeService.pageQuery(pageQueryDTO);
         return R.success(pageResult);
+    }
+
+    /**
+     * 员工账号状态变更
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    public R<String> startOrStop(@PathVariable("status") Integer status,long id){
+        log.info("员工账号状态变更");
+        employeeService.startOrStop(status,id);
+        return R.success();
     }
 }

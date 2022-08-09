@@ -7,6 +7,9 @@
         values (#{username}, #{name}, #{password}, #{phone}, #{sex}, #{idNumber}, #{createTime}, #{updateTime},
                 #{createUser}, #{updateUser})
     </insert>
+    <update id="updateStatusById">
+        update employee set status = #{status} where id = #{id}
+    </update>
     <select id="getByUsername" parameterType="string" resultType="Employee">
         select *
         from employee

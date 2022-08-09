@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
 
     /**
-     *
+     * 员工登录
      * @param employeeLoginDTO
      * @return
      */
@@ -60,6 +60,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
+    /**
+     * 添加员工
+     * @param employeeDTO
+     */
     @Override
     public void save(EmployeeDTO employeeDTO) {
 
@@ -78,12 +82,27 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.insert(employee);
     }
 
+    /**
+     * 分页查询
+     * @param pageQueryDTO
+     * @return
+     */
     @Override
     public PageResult pageQuery(EmployeePageQueryDTO pageQueryDTO) {
         //基于PageHelper插件实现分页查询
         PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
         Page<Employee> page =  employeeMapper.pageQuery(pageQueryDTO);
         return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 员工状态
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, long id) {
+        employeeMapper.updateStatusById(status,id);
     }
 
 

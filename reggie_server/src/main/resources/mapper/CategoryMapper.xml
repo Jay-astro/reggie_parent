@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.reggie.mapper.CategoryMapper">
+
+    <insert id="insert" parameterType="category">
+        insert into category
+        (type, name, sort, status, create_time, update_time, create_user, update_user)
+        values (#{type}, #{name}, #{sort}, #{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+    <delete id="deleteBuId">
+        delete
+        from category
+        where id = #{id}
+    </delete>
+    <select id="pageQuery" resultType="com.reggie.entity.Category">
+        select * from category
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+        </where>
+        order by sort asc,create_time desc
+    </select>
+</mapper>

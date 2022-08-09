@@ -1,6 +1,6 @@
 package com.reggie.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+
 import com.reggie.interceptor.JwtTokenAdminInterceptor;
 import com.reggie.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;

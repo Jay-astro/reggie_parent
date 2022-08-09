@@ -83,7 +83,6 @@ public class EmployeeController {
 
     /**
      * 新增员工
-     *
      * @param employeeDTO
      * @return
      */
@@ -97,7 +96,6 @@ public class EmployeeController {
 
     /**
      * 分页查询
-     *
      * @param pageQueryDTO
      * @return
      */
@@ -110,7 +108,6 @@ public class EmployeeController {
 
     /**
      * 员工账号状态变更
-     *
      * @param status
      * @param id
      * @return
@@ -123,6 +120,11 @@ public class EmployeeController {
         return R.success();
     }
 
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     @ApiOperation("根据ID查询")
     public R<Employee> selectById(@PathVariable("id") Long id) {
@@ -131,6 +133,11 @@ public class EmployeeController {
     }
 
 
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     * @return
+     */
     @PutMapping
     @ApiOperation("编辑员工信息")
     public R<String> update(@RequestBody EmployeeDTO employeeDTO) {

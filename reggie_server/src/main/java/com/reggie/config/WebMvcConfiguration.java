@@ -68,11 +68,19 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
+    /**
+     * 扩展Springmvc的消息转换器
+     * 转换时间格式
+     * @param converters
+     */
     @Override
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         log.info("开始扩展消息转换器...");
+        //创建消息转换器对象
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+        //设置对象转换器
         messageConverter.setObjectMapper(new JacksonObjectMapper());
+        //注入自己的转换器，并提高优先级
         converters.add(0,messageConverter);
     }
 }

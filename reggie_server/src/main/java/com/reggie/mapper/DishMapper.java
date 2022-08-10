@@ -32,4 +32,30 @@ public interface DishMapper {
      * @return
      */
     Page<DishVO> pageQuery(DishPageQueryDTO pageQueryDTO);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    Dish getById(Long id);
+
+    /**
+     *
+     * @param dishId
+     */
+    void deleteById(Long dishId);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    DishVO getByIdWithFlavor(Long id);
+
+    /**
+     *
+     * @param dish
+     */
+    void update(Dish dish);
 }

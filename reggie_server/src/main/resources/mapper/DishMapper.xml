@@ -25,7 +25,7 @@
             <if test="categoryId != null">
                 and d.category_id = #{categoryId}
             </if>
-            <if test="sattus != null">
+            <if test="status != null">
                 and d.status = #{status}
             </if>
         </where>

@@ -5,6 +5,7 @@ import com.reggie.constant.JwtClaimsConstant;
 import com.reggie.dto.EmployeeDTO;
 import com.reggie.dto.EmployeeLoginDTO;
 import com.reggie.dto.EmployeePageQueryDTO;
+import com.reggie.dto.PasswordEditDTO;
 import com.reggie.entity.Employee;
 import com.reggie.properties.JwtProperties;
 import com.reggie.result.PageResult;
@@ -142,6 +143,17 @@ public class EmployeeController {
     @ApiOperation("编辑员工信息")
     public R<String> update(@RequestBody EmployeeDTO employeeDTO) {
         employeeService.update(employeeDTO);
+        return R.success();
+    }
+
+    /**
+     * 修改密码
+     * @return
+     */
+    @PutMapping("/editPassword")
+    @ApiOperation("修改密码")
+    public R<String> editPassword(@RequestBody PasswordEditDTO passwordEditDTO){
+        employeeService.editPassword(passwordEditDTO);
         return R.success();
     }
 }

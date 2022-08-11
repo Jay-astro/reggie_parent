@@ -1,6 +1,5 @@
 package com.reggie.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.reggie.constant.MessageConstant;
@@ -10,9 +9,11 @@ import com.reggie.context.BaseContext;
 import com.reggie.dto.EmployeeDTO;
 import com.reggie.dto.EmployeeLoginDTO;
 import com.reggie.dto.EmployeePageQueryDTO;
+import com.reggie.dto.PasswordEditDTO;
 import com.reggie.entity.Employee;
 import com.reggie.exception.AccountLockedException;
 import com.reggie.exception.AccountNotFoundException;
+import com.reggie.exception.PasswordEditFailedException;
 import com.reggie.exception.PasswordErrorException;
 import com.reggie.mapper.EmployeeMapper;
 import com.reggie.result.PageResult;
@@ -22,8 +23,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-
-import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -130,6 +129,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeMapper.update(employee);
 
+    }
+
+    @Override
+    public void editPassword(PasswordEditDTO passwordEditDTO) {
+        String newPassword = passwordEditDTO.getNewPassword();
+        String oldPassword = passwordEditDTO.getOldPassword();
+        Long empId = passwordEditDTO.getEmpId();
+        if (empId == null){
+            empId = BaseContext.getCurrentId();
+        }
+        Employee employee = employeeMapper.selectById(empId);
+        if (employee == null){
+            throw new PasswordEditFailedException(MessageConstant.PASSWORD_EDIT_FAILED);
+        }
+        if (!(DigestUtils.md5DigestAsHex(oldPassword.getBytes()).equals(employeeMapper.selectById(empId).getPassword()))){
+            throw new PasswordEditFailedException(MessageConstant.PASSWORD_EDIT_FAILED);
+        }
+
+        Employee emp = Employee.builder()
+                .id(empId)
+                .password(DigestUtils.md5DigestAsHex(newPassword.getBytes()))
+                .build();
+
+        employeeMapper.update(emp);
     }
 
 

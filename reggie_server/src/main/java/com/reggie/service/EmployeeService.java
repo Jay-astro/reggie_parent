@@ -5,6 +5,7 @@ import com.reggie.constant.AutoFillConstant;
 import com.reggie.dto.EmployeeDTO;
 import com.reggie.dto.EmployeeLoginDTO;
 import com.reggie.dto.EmployeePageQueryDTO;
+import com.reggie.dto.PasswordEditDTO;
 import com.reggie.entity.Employee;
 import com.reggie.result.PageResult;
 import com.reggie.result.R;
@@ -51,4 +52,10 @@ public interface EmployeeService {
      * @param employeeDTO
      */
     void update(EmployeeDTO employeeDTO);
+
+    /**
+     * 修改密码
+     * @param employeeDTO
+     */
+    void editPassword(PasswordEditDTO passwordEditDTO);
 }

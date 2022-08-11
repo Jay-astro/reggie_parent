@@ -131,6 +131,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    /**
+     * 修改密码
+     * @param passwordEditDTO
+     */
     @Override
     public void editPassword(PasswordEditDTO passwordEditDTO) {
         String newPassword = passwordEditDTO.getNewPassword();

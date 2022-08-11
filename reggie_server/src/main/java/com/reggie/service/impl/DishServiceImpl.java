@@ -108,4 +108,9 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavorList);
         }
     }
+
+    @Override
+    public void allowOrBan(Integer status, long id) {
+        dishMapper.updateStatusById(status,id);
+    }
 }

@@ -12,4 +12,10 @@ public interface SetmealDishMapper {
      * @return
      */
     List<Long> getSetmealIdsByDishIds(List<Long> ids);
+
+    /**
+     *
+     * @param setmealId
+     */
+    void deleteBySetmealId(Long setmealId);
 }

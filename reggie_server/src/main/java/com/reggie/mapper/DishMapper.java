@@ -58,4 +58,11 @@ public interface DishMapper {
      * @param dish
      */
     void update(Dish dish);
+
+    /**
+     *
+     * @param status
+     * @param id
+     */
+    void updateStatusById(Integer status, long id);
 }

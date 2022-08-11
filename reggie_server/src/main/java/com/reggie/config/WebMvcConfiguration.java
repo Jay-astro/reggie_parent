@@ -60,6 +60,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         return docket;
     }
 
+
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info("开始设置静态资源映射...");

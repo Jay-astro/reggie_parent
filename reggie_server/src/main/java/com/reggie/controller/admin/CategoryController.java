@@ -2,6 +2,7 @@ package com.reggie.controller.admin;
 
 import com.reggie.dto.CategoryDTO;
 import com.reggie.dto.CategoryPageQueryDTO;
+import com.reggie.dto.EmployeeDTO;
 import com.reggie.result.PageResult;
 import com.reggie.result.R;
 import com.reggie.service.CategoryService;
@@ -58,4 +59,29 @@ public class CategoryController {
         return R.success();
     }
 
+    /**
+     * 分类状态变更
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("分类状态变更")
+    public R<String> allowOrBan(@PathVariable("status") Integer status, long id) {
+        log.info("分类状态变更");
+        categoryService.allowOrBan(status, id);
+        return R.success();
+    }
+
+    /**
+     * 编辑分类
+     * @param categoryDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("编辑分类")
+    public R<String> update(@RequestBody CategoryDTO categoryDTO) {
+        categoryService.update(categoryDTO);
+        return R.success();
+    }
 }

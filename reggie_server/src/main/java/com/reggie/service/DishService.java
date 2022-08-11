@@ -41,4 +41,11 @@ public interface DishService {
      * @param dishDTO
      */
     void updateWithFlavor(DishDTO dishDTO);
+
+    /**
+     *
+     * @param status
+     * @param id
+     */
+    void allowOrBan(Integer status, long id);
 }

@@ -60,4 +60,16 @@ public class CategoryServiceImpl implements CategoryService {
         }
         categoryMapper.deleteBuId(id);
     }
+
+    @Override
+    public void allowOrBan(Integer status, long id) {
+        categoryMapper.updateStatusById(status,id);
+    }
+
+    @Override
+    public void update(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryDTO,category);
+        categoryMapper.update(category);
+    }
 }

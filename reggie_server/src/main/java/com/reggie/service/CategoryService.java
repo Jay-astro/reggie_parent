@@ -23,4 +23,17 @@ public interface CategoryService {
      * @param id
      */
     void deleteById(Long id);
+
+    /**
+     * 分类状态变更
+     * @param status
+     * @param id
+     */
+    void allowOrBan(Integer status, long id);
+
+    /**
+     * 编辑分类
+     * @param categoryDTO
+     */
+    void update(CategoryDTO categoryDTO);
 }

@@ -86,4 +86,18 @@ public class DishController {
         dishService.updateWithFlavor(dishDTO);
         return R.success();
     }
+
+    /**
+     * 菜品状态变更
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("菜品状态变更")
+    public R<String> allowOrBan(@PathVariable("status") Integer status, long id) {
+        log.info("菜品状态变更");
+        dishService.allowOrBan(status, id);
+        return R.success();
+    }
 }

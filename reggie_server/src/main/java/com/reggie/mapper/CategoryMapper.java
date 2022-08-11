@@ -29,4 +29,18 @@ public interface CategoryMapper {
      * @param id
      */
     void deleteBuId(Long id);
+
+    /**
+     * 分类状态变更
+     * @param status
+     * @param id
+     */
+    void updateStatusById(Integer status, long id);
+
+    /**
+     * 编辑分类
+     * @param category
+     */
+    @AutoFill(type = AutoFillConstant.UPDATE)
+    void update(Category category);
 }

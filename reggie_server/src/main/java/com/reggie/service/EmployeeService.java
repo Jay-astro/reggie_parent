@@ -55,7 +55,7 @@ public interface EmployeeService {
 
     /**
      * 修改密码
-     * @param employeeDTO
+     * @param passwordEditDTO
      */
     void editPassword(PasswordEditDTO passwordEditDTO);
 }

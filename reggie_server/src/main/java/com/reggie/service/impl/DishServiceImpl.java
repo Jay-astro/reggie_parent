@@ -36,63 +36,94 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private SetmealDishMapper setmealDishMapper;
 
+    /**
+     * 新增菜品
+     *
+     * @param dishDTO
+     * @return
+     */
     @Override
     @Transactional
     public void saveWithFlavor(DishDTO dishDTO) {
         Dish dish = new Dish();
-        BeanUtils.copyProperties(dishDTO,dish);
+        BeanUtils.copyProperties(dishDTO, dish);
         dishMapper.insert(dish);
 
         Long dishId = dish.getId();
         List<DishFlavor> flavorList = dishDTO.getFlavors();
-        if (flavorList == null || flavorList.size() == 0){
+        if (flavorList == null || flavorList.size() == 0) {
             return;
         }
-        flavorList.forEach(item ->{
+        flavorList.forEach(item -> {
             item.setDishId(dishId);
         });
         dishFlavorMapper.insertBatch(flavorList);
     }
 
+    /**
+     * 菜品分页查询
+     *
+     * @param pageQueryDTO
+     * @return
+     */
     @Override
     public PageResult pageQuery(DishPageQueryDTO pageQueryDTO) {
-        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        PageHelper.startPage(pageQueryDTO.getPage(), pageQueryDTO.getPageSize());
         Page<DishVO> page = dishMapper.pageQuery(pageQueryDTO);
-        return new PageResult(page.getTotal(),page.getResult());
+        return new PageResult(page.getTotal(), page.getResult());
     }
 
+    /**
+     * 批量删除菜品
+     *
+     * @param ids
+     * @return
+     */
     @Override
     @Transactional
     public void deleteBatch(List<Long> ids) {
-        ids.forEach(id-> {
+        ids.forEach(id -> {
             Dish dish = dishMapper.getById(id);
-            if (StatusConstant.ENABLE == dish.getStatus()){
+            if (StatusConstant.ENABLE == dish.getStatus()) {
                 //正在售卖的商品不能删除
                 throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
             }
         });
 
         List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishIds(ids);
-        if (setmealIds != null && setmealIds.size() > 0){
-            throw  new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
+        if (setmealIds != null && setmealIds.size() > 0) {
+            throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
-        ids.forEach(dishId-> {
+        ids.forEach(dishId -> {
             dishMapper.deleteById(dishId);
             dishFlavorMapper.deleteByDishId(dishId);
         });
     }
 
+    /**
+     * 查询菜品关联的口味数据
+     *
+     * @param id
+     * @return
+     */
     @Override
     public DishVO getByIdWithFlavor(Long id) {
         DishVO dishVO = dishMapper.getByIdWithFlavor(id);
         return dishVO;
     }
 
+
+    /**
+     * 修改菜品
+     *
+     * @param dishDTO
+     * @return
+     */
     @Override
     @Transactional
     public void updateWithFlavor(DishDTO dishDTO) {
         Dish dish = new Dish();
-        BeanUtils.copyProperties(dishDTO,dish);
+        BeanUtils.copyProperties(dishDTO, dish);
         //修改菜品
         dishMapper.update(dish);
         //删除口味数据
@@ -100,7 +131,7 @@ public class DishServiceImpl implements DishService {
         dishFlavorMapper.deleteByDishId(dishId);
 
         List<DishFlavor> flavorList = dishDTO.getFlavors();
-        if (flavorList != null && flavorList.size() > 0 ){
+        if (flavorList != null && flavorList.size() > 0) {
             flavorList.forEach(dishFlavor -> {
                 dishFlavor.setDishId(dishId);
             });
@@ -109,8 +140,32 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+    /**
+     * 菜品状态变更
+     *
+     * @param status
+     * @param id
+     * @return
+     */
     @Override
     public void allowOrBan(Integer status, long id) {
-        dishMapper.updateStatusById(status,id);
+        dishMapper.updateStatusById(status, id);
     }
+
+    /**
+     * 根据分类Id查询菜品
+     *
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> list(Long categoryId) {
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE)
+                .build();
+        return dishMapper.list(dish);
+    }
+
+
 }

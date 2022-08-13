@@ -2,6 +2,7 @@ package com.reggie.service;
 
 import com.reggie.dto.DishDTO;
 import com.reggie.dto.DishPageQueryDTO;
+import com.reggie.entity.Dish;
 import com.reggie.result.PageResult;
 import com.reggie.vo.DishVO;
 
@@ -48,4 +49,11 @@ public interface DishService {
      * @param id
      */
     void allowOrBan(Integer status, long id);
+
+    /**
+     * 根据分类Id查询菜品
+     * @param categoryId
+     * @return
+     */
+    List<Dish> list(Long categoryId);
 }

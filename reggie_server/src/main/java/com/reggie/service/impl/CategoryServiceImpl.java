@@ -12,11 +12,14 @@ import com.reggie.mapper.CategoryMapper;
 import com.reggie.mapper.DishMapper;
 import com.reggie.mapper.SetmealMapper;
 import com.reggie.result.PageResult;
+import com.reggie.result.R;
 import com.reggie.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -31,6 +34,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private SetmealMapper setmealMapper;
 
+
+    /**
+     * 新增分类
+     * @param categoryDTO
+     * @return
+     */
     @Override
     public void save(CategoryDTO categoryDTO) {
 
@@ -41,6 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
+    /**
+     * 分页查询
+     * @param pageQueryDTO
+     * @return
+     */
     @Override
     public PageResult pageQuery(CategoryPageQueryDTO pageQueryDTO) {
         PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
@@ -48,6 +62,11 @@ public class CategoryServiceImpl implements CategoryService {
         return new PageResult(page.getTotal(),page.getResult());
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @Override
     public void deleteById(Long id) {
         Long dishCount = dishMapper.countByCategoryId(id);
@@ -61,15 +80,37 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.deleteBuId(id);
     }
 
+    /**
+     * 分类状态变更
+     * @param status
+     * @param id
+     * @return
+     */
     @Override
     public void allowOrBan(Integer status, long id) {
         categoryMapper.updateStatusById(status,id);
     }
 
+    /**
+     * 编辑分类
+     * @param categoryDTO
+     * @return
+     */
     @Override
     public void update(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO,category);
         categoryMapper.update(category);
+    }
+
+    /**
+     * 根据类型查询
+     * @param type
+     * @return
+     */
+    @Override
+    public List<Category> list(Integer type) {
+        List<Category> list = categoryMapper.list(type);
+        return list;
     }
 }

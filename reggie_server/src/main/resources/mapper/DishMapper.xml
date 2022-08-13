@@ -38,7 +38,9 @@
         where id = #{id}
     </update>
     <update id="updateStatusById">
-        update dish set status = #{status} where id = #{id}
+        update dish
+        set status = #{status}
+        where id = #{id}
     </update>
     <delete id="deleteById">
         delete
@@ -97,5 +99,20 @@
                  left join dish_flavor b
                            on a.id = b.dish_id
         where a.id = #{id}
+    </select>
+    <select id="list" resultType="com.reggie.entity.Dish" parameterType="dish">
+        select * from dish
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by create_time desc
     </select>
 </mapper>

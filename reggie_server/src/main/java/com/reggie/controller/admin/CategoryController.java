@@ -3,6 +3,7 @@ package com.reggie.controller.admin;
 import com.reggie.dto.CategoryDTO;
 import com.reggie.dto.CategoryPageQueryDTO;
 import com.reggie.dto.EmployeeDTO;
+import com.reggie.entity.Category;
 import com.reggie.result.PageResult;
 import com.reggie.result.R;
 import com.reggie.service.CategoryService;
@@ -11,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/category")
@@ -83,5 +86,18 @@ public class CategoryController {
     public R<String> update(@RequestBody CategoryDTO categoryDTO) {
         categoryService.update(categoryDTO);
         return R.success();
+    }
+
+
+    /**
+     * 根据类型查询
+     * @param type
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据类型查询")
+    public R<List<Category>> listR(Integer type){
+        List<Category> list = categoryService.list(type);
+        return  R.success(list);
     }
 }

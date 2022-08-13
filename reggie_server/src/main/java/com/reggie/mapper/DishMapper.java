@@ -8,6 +8,8 @@ import com.reggie.entity.Dish;
 import com.reggie.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface DishMapper {
 
@@ -65,4 +67,11 @@ public interface DishMapper {
      * @param id
      */
     void updateStatusById(Integer status, long id);
+
+    /**
+     * 根据分类Id查询菜品
+     * @param dish
+     * @return
+     */
+    List<Dish> list(Dish dish);
 }

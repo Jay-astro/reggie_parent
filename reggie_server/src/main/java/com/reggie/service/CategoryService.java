@@ -2,7 +2,10 @@ package com.reggie.service;
 
 import com.reggie.dto.CategoryDTO;
 import com.reggie.dto.CategoryPageQueryDTO;
+import com.reggie.entity.Category;
 import com.reggie.result.PageResult;
+
+import java.util.List;
 
 public interface CategoryService {
     /**
@@ -36,4 +39,10 @@ public interface CategoryService {
      * @param categoryDTO
      */
     void update(CategoryDTO categoryDTO);
+
+    /**
+     * 根据类型查询
+     * @param type
+     */
+    List<Category> list(Integer type);
 }

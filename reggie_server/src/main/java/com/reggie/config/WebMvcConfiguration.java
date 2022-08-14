@@ -28,9 +28,13 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
 
+    @Autowired
+    private JwtTokenAdminInterceptor jwtTokenUserInterceptor;
+
 
     /**
      * 自定义拦截
+     *
      * @param registry
      */
     @Override
@@ -38,11 +42,14 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         log.info("开始注册自定义拦截器...");
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/employee/login","/admin/employee/logout");
+                .excludePathPatterns("/admin/employee/login", "/admin/employee/logout");
+        registry.addInterceptor(jwtTokenUserInterceptor)
+                .addPathPatterns("/User/**")
+                .excludePathPatterns("/User/User/login", "/User/User/logout");
     }
 
     @Bean
-    public Docket docket(){
+    public Docket docket() {
         log.info("生成接口文档...");
 
         ApiInfo apiInfo = new ApiInfoBuilder()
@@ -71,6 +78,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     /**
      * 扩展Springmvc的消息转换器
      * 转换时间格式
+     *
      * @param converters
      */
     @Override
@@ -81,6 +89,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         //设置对象转换器
         messageConverter.setObjectMapper(new JacksonObjectMapper());
         //注入自己的转换器，并提高优先级
-        converters.add(0,messageConverter);
+        converters.add(0, messageConverter);
     }
 }

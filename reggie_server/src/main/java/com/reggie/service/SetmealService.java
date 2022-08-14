@@ -2,7 +2,9 @@ package com.reggie.service;
 
 import com.reggie.dto.SetmealDTO;
 import com.reggie.dto.SetmealPageQueryDTO;
+import com.reggie.entity.Setmeal;
 import com.reggie.result.PageResult;
+import com.reggie.vo.DishItemVO;
 import com.reggie.vo.SetmealVO;
 
 import java.util.List;
@@ -46,4 +48,18 @@ public interface SetmealService {
      * @param setmealDTO
      */
     void saveWithDishs(SetmealDTO setmealDTO);
+
+    /**
+     * 根据分类id查询套餐
+     * @param setmeal
+     * @return
+     */
+    List<Setmeal> list(Setmeal setmeal);
+
+    /**
+     * 根据套餐id查询包含的菜品列表
+     * @param id
+     * @return
+     */
+    List<DishItemVO> getDishItemById(Long id);
 }

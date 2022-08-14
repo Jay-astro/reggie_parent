@@ -17,5 +17,5 @@ reggie:
     access-key-secret: 1ljVihtPRN2G03zDUK0ujmsTTB7LBh
     bucket-name: reggie-jay-astro
   wechat:
-    appid: xxx
-    secret: yyy
+    appid: wxe68f033026b541d2
+    secret: f53f6e7fab1f1f8e0e873bd80aa8d4f8

@@ -9,6 +9,8 @@ import com.reggie.entity.Setmeal;
 import com.reggie.vo.SetmealVO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface SetmealMapper {
     /**
@@ -67,4 +69,11 @@ public interface SetmealMapper {
      */
     @AutoFill(type = AutoFillConstant.INSERT)
     void insert(Setmeal setmeal);
+
+    /**
+     * 动态条件查询套餐
+     * @param setmeal
+     * @return
+     */
+    List<Setmeal> list(Setmeal setmeal);
 }

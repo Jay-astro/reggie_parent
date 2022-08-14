@@ -26,6 +26,10 @@ public class ShopServiceImpl implements ShopService {
         log.info("设置营业状态:{}", status == 1 ? "营业" : "打烊");
     }
 
+    /**
+     * 获取营业状态
+     * @return
+     */
     @Override
     public Integer getShopStatus() {
         return (Integer) redisTemplate.opsForValue().get(KEY);

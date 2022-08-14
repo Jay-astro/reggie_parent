@@ -6,14 +6,18 @@ import com.reggie.constant.MessageConstant;
 import com.reggie.constant.StatusConstant;
 import com.reggie.dto.SetmealDTO;
 import com.reggie.dto.SetmealPageQueryDTO;
+import com.reggie.entity.Dish;
 import com.reggie.entity.Setmeal;
 import com.reggie.entity.SetmealDish;
 import com.reggie.exception.DeletionNotAllowedException;
+import com.reggie.exception.SetmealEnableFailedException;
+import com.reggie.mapper.DishMapper;
 import com.reggie.mapper.SetmealDishMapper;
 import com.reggie.mapper.SetmealMapper;
 import com.reggie.result.PageResult;
 import com.reggie.result.R;
 import com.reggie.service.SetmealService;
+import com.reggie.vo.DishItemVO;
 import com.reggie.vo.SetmealVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +41,8 @@ public class SetmealServiceImpl implements SetmealService {
     @Autowired
     private SetmealDishMapper setmealDishMapper;
 
+    @Autowired
+    private DishMapper dishMapper;
 
     /**
      * 修改套餐
@@ -91,6 +97,16 @@ public class SetmealServiceImpl implements SetmealService {
      */
     @Override
     public void allowOrBan(Integer status, Long id) {
+        if (status == StatusConstant.ENABLE){
+            List<Dish> dishList = dishMapper.getBySetmealId(id);
+            if(dishList != null && dishList.size() > 0) {
+                dishList.forEach(dish -> {
+                    if (StatusConstant.DISABLE == dish.getStatus()) {
+                        throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+                    }
+                });
+            }
+        }
         setmealMapper.updateStatusById(status, id);
     }
 
@@ -134,6 +150,25 @@ public class SetmealServiceImpl implements SetmealService {
         });
 
         setmealDishMapper.insertBatch(setmealDishes);
+    }
+
+    /**
+     * 条件查询
+     * @param setmeal
+     * @return
+     */
+    public List<Setmeal> list(Setmeal setmeal) {
+        List<Setmeal> list = setmealMapper.list(setmeal);
+        return list;
+    }
+
+    /**
+     * 根据id查询菜品选项
+     * @param id
+     * @return
+     */
+    public List<DishItemVO> getDishItemById(Long id) {
+        return dishMapper.getDishItemBySetmealId(id);
     }
 
 }

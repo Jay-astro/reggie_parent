@@ -11,9 +11,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/dish")
@@ -23,6 +25,18 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    /**
+     * 清理缓存
+     * @param pattern
+     */
+    private void cleanCache(String pattern){
+        Set keys = redisTemplate.keys(pattern);
+        redisTemplate.delete(keys);
+    }
 
     /**
      * 新增菜品
@@ -35,6 +49,9 @@ public class DishController {
     public R<String> save(@RequestBody DishDTO dishDTO) {
         log.info("新增菜品:{}", dishDTO);
         dishService.saveWithFlavor(dishDTO);
+
+        cleanCache("dish_"+ dishDTO.getCategoryId());
+
         return R.success();
     }
 
@@ -63,6 +80,7 @@ public class DishController {
     public R<String> delete(@RequestParam List<Long> ids) {
         log.info("批量删除菜品");
         dishService.deleteBatch(ids);
+        cleanCache("dish_*");
         return R.success();
     }
 
@@ -91,6 +109,7 @@ public class DishController {
     public R<String> update(@RequestBody DishDTO dishDTO) {
         log.info("修改菜品:{}", dishDTO);
         dishService.updateWithFlavor(dishDTO);
+        cleanCache("dish_*");
         return R.success();
     }
 
@@ -106,6 +125,7 @@ public class DishController {
     public R<String> allowOrBan(@PathVariable("status") Integer status, long id) {
         log.info("菜品状态变更");
         dishService.allowOrBan(status, id);
+        cleanCache("dish_*");
         return R.success();
     }
 

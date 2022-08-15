@@ -11,7 +11,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class
+GlobalExceptionHandler {
 
     /**
      * 捕获业务异常

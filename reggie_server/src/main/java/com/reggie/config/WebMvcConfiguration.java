@@ -2,6 +2,7 @@ package com.reggie.config;
 
 
 import com.reggie.interceptor.JwtTokenAdminInterceptor;
+import com.reggie.interceptor.JwtTokenUserInterceptor;
 import com.reggie.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
 
     @Autowired
-    private JwtTokenAdminInterceptor jwtTokenUserInterceptor;
+    private JwtTokenUserInterceptor jwtTokenUserInterceptor;
 
 
     /**
@@ -44,8 +45,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/employee/login", "/admin/employee/logout");
         registry.addInterceptor(jwtTokenUserInterceptor)
-                .addPathPatterns("/User/**")
-                .excludePathPatterns("/User/User/login", "/User/User/logout");
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/user/login");
     }
 
     @Bean

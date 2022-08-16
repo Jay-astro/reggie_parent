@@ -50,8 +50,8 @@
     <select id="list" resultType="com.reggie.entity.Category">
         select * from category
         where status = 1
-<if test="type != null">
-    and type = #{type}
-</if>
+        <if test="type != null">
+            and type = #{type}
+        </if>
     </select>
 </mapper>

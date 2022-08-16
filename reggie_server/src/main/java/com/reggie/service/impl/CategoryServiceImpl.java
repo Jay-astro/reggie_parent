@@ -37,6 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 新增分类
+     *
      * @param categoryDTO
      * @return
      */
@@ -44,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void save(CategoryDTO categoryDTO) {
 
         Category category = new Category();
-        BeanUtils.copyProperties(categoryDTO,category);
+        BeanUtils.copyProperties(categoryDTO, category);
         category.setStatus(StatusConstant.DISABLE);
         categoryMapper.insert(category);
 
@@ -52,29 +53,31 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 分页查询
+     *
      * @param pageQueryDTO
      * @return
      */
     @Override
     public PageResult pageQuery(CategoryPageQueryDTO pageQueryDTO) {
-        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        PageHelper.startPage(pageQueryDTO.getPage(), pageQueryDTO.getPageSize());
         Page<Category> page = categoryMapper.pageQuery(pageQueryDTO);
-        return new PageResult(page.getTotal(),page.getResult());
+        return new PageResult(page.getTotal(), page.getResult());
     }
 
     /**
      * 删除
+     *
      * @param id
      * @return
      */
     @Override
     public void deleteById(Long id) {
         Long dishCount = dishMapper.countByCategoryId(id);
-        if (dishCount > 0){
+        if (dishCount > 0) {
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
         }
         Long setmealCount = setmealMapper.countByCategoryId(id);
-        if (setmealCount > 0){
+        if (setmealCount > 0) {
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
         }
         categoryMapper.deleteBuId(id);
@@ -82,29 +85,32 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 分类状态变更
+     *
      * @param status
      * @param id
      * @return
      */
     @Override
     public void allowOrBan(Integer status, long id) {
-        categoryMapper.updateStatusById(status,id);
+        categoryMapper.updateStatusById(status, id);
     }
 
     /**
      * 编辑分类
+     *
      * @param categoryDTO
      * @return
      */
     @Override
     public void update(CategoryDTO categoryDTO) {
         Category category = new Category();
-        BeanUtils.copyProperties(categoryDTO,category);
+        BeanUtils.copyProperties(categoryDTO, category);
         categoryMapper.update(category);
     }
 
     /**
      * 根据类型查询
+     *
      * @param type
      * @return
      */

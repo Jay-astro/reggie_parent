@@ -25,7 +25,9 @@
 
     <!--根据主键删除-->
     <delete id="deleteById" parameterType="long">
-        delete from user where id = #{id}
+        delete
+        from user
+        where id = #{id}
     </delete>
 
     <!--根据id修改-->
@@ -78,7 +80,9 @@
 
     <!--根据openid查询用户-->
     <select id="getByOpenid" resultType="com.reggie.entity.User">
-        select * from user where openid = #{openid}
+        select *
+        from user
+        where openid = #{openid}
     </select>
 
 </mapper>

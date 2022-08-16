@@ -5,6 +5,7 @@ import com.reggie.dto.ShoppingCartDTO;
 import com.reggie.entity.ShoppingCart;
 import com.reggie.result.R;
 import com.reggie.service.ShoppingCartService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/user/shoppingCart")
+@Api(tags = "C端-购物车接口")
 public class shoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
@@ -65,7 +67,7 @@ public class shoppingCartController {
      * @return
      */
     @PostMapping("/sub")
-    @ApiOperation("")
+    @ApiOperation("删除一个商品")
     public R<String> sub(@RequestBody ShoppingCartDTO shoppingCartDTO) {
         log.info("删除一个商品:{}",shoppingCartDTO);
         shoppingCartService.sub(shoppingCartDTO);

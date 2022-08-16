@@ -79,5 +79,11 @@
         from orders
         where id = #{id}
     </select>
+    <select id="getByStatusAndOrderTimeLT" resultType="com.reggie.entity.Orders">
+        select *
+        from orders
+        where status = #{status}
+          and order_time &lt; #{orderTime}
+    </select>
 
 </mapper>

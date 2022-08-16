@@ -13,8 +13,8 @@ reggie:
     password: 123456
   alioss:
     endpoint: oss-cn-hangzhou.aliyuncs.com
-    access-key-id: LTAI5t7TkHsKShhNMrKg2vzg
-    access-key-secret: 1ljVihtPRN2G03zDUK0ujmsTTB7LBh
+    access-key-id: ****
+    access-key-secret: ****
     bucket-name: reggie-jay-astro
   wechat:
     appid: wxe68f033026b541d2
